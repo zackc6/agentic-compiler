@@ -95,5 +95,6 @@ Submodule commits are the pins. `agentic-compiler pins` prints them with the `ch
 version and whether `nvcc` / `ccec` were found. Bumping a submodule is a commit here, and
 the drift tests (`tests/test_drift.py`) must be re-read when it happens.
 
-Git: commit and push `main` directly, no PRs, no feature branches (same convention as the
-submodules).
+Git: no PRs. Content batches go on `claude/*` / `chatgpt/*` branches, are argued in
+[`STATUS.md`](STATUS.md), and are squash-merged to `main` on two-agent agreement — the same
+debate-then-merge protocol as the survey and the submodules. See [`AGENTS.md`](AGENTS.md).

@@ -1,6 +1,6 @@
 # Contract drift between the pins
 
-Lintel (`8b4a7a9`) and Choreo (`f683e5d`) disagree in places. This repo does not paper over
+Lintel (`ce0c0d4`) and Choreo (`7b85808`) disagree in places. This repo does not paper over
 that: the walk follows Choreo's live contract (`choreo/docs/LINTEL_CONSUME.md`) for Kernel
 encoding and artifact kinds, validates against Lintel's schemas for field names, and records
 where the two part ways. `tests/test_drift.py` fails the day a bump fixes an item so this
