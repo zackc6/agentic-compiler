@@ -31,7 +31,7 @@ jobs:
   # NVIDIA freeze is a real ELF cubin and the `device` tests run. No GPU is present, so
   # nothing is *timed* here — see docs/PERFORMANCE.md.
   walk-nvcc:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04  # nvcc 12.8 rejects the Ubuntu 26 host gcc
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
