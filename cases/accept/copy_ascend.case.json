@@ -1,0 +1,24 @@
+{
+  "schema": "agentic-compiler.case.v0",
+  "name": "copy_ascend",
+  "region_id": "copy.gmem",
+  "op_family": "other",
+  "emit": "npu-bin",
+  "fallback": "classical",
+  "false_neg_owner": "zackc6",
+  "candidates": [
+    {
+      "enum_id": "copy",
+      "kernel": "choreo/examples/copy.json",
+      "tensors": "choreo/examples/copy.tensors.json",
+      "expected": "choreo/examples/copy.expected.json",
+      "target": "ascend-a2"
+    }
+  ],
+  "expect": {
+    "decision": "freeze",
+    "walk": [
+      "accept"
+    ]
+  }
+}

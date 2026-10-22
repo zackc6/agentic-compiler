@@ -1,0 +1,21 @@
+{
+  "schema": "agentic-compiler.case.v0",
+  "name": "reject_layout_cover",
+  "region_id": "copy.gmem",
+  "op_family": "other",
+  "emit": "source",
+  "fallback": "classical",
+  "false_neg_owner": "zackc6",
+  "candidates": [
+    {
+      "enum_id": "copy",
+      "kernel": "choreo/examples/fails/layout_cover.json"
+    }
+  ],
+  "expect": {
+    "decision": "fallback",
+    "walk": [
+      "reject:L"
+    ]
+  }
+}

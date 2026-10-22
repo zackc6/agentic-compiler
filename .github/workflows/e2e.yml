@@ -1,0 +1,62 @@
+name: e2e
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  # Job 1: CPU-only. Every walk, every schema, no device toolchain. Must pass anywhere.
+  walk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: ./scripts/setup.sh
+      - run: python3 -m pytest -rs
+      - run: agentic-compiler run-all -o out
+      - uses: actions/upload-artifact@v4
+        with:
+          name: walks-cpu
+          path: out/
+
+  # Job 2: same walks with the official nvcc fetched (as choreo's own CI does), so the
+  # NVIDIA freeze is a real ELF cubin and the `device` tests run. No GPU is present, so
+  # nothing is *timed* here — see docs/PERFORMANCE.md.
+  walk-nvcc:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: actions/cache/restore@v4
+        id: cache-nvcc
+        with:
+          path: ~/.local/cuda-nvcc
+          key: cuda-nvcc-linux-x86_64-12.8.93-cudart-12.8.90
+      - run: ./scripts/setup.sh
+      - name: Official nvcc
+        env:
+          CHOREO_FETCH_NVCC: "1"
+        run: |
+          python3 -c "from choreoir.toolchain import ensure_nvcc; import sys; p=ensure_nvcc(); print(p or 'nvcc-missing'); sys.exit(0 if p else 1)"
+          echo "$HOME/.local/cuda-nvcc/bin" >> "$GITHUB_PATH"
+      - uses: actions/cache/save@v4
+        if: steps.cache-nvcc.outputs.cache-hit != 'true'
+        with:
+          path: ~/.local/cuda-nvcc
+          key: cuda-nvcc-linux-x86_64-12.8.93-cudart-12.8.90
+      - run: python3 -m pytest -rs
+      - run: agentic-compiler run-all -o out
+      - uses: actions/upload-artifact@v4
+        with:
+          name: walks-nvcc
+          path: out/

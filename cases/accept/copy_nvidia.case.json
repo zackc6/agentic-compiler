@@ -1,0 +1,23 @@
+{
+  "schema": "agentic-compiler.case.v0",
+  "name": "copy_nvidia",
+  "region_id": "copy.gmem",
+  "op_family": "other",
+  "emit": "cubin",
+  "fallback": "classical",
+  "false_neg_owner": "zackc6",
+  "candidates": [
+    {
+      "enum_id": "copy",
+      "kernel": "choreo/examples/copy.json",
+      "tensors": "choreo/examples/copy.tensors.json",
+      "expected": "choreo/examples/copy.expected.json"
+    }
+  ],
+  "expect": {
+    "decision": "freeze",
+    "walk": [
+      "accept"
+    ]
+  }
+}

@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agentic-compiler"
+version = "0.1.0"
+description = "End-to-end walk of the Lintel control plane over the Choreo IR data plane: propose, gate, measure, freeze or fall back, serve."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "Apache-2.0" }
+dependencies = [
+  # choreoir is installed from the ./choreo submodule (see scripts/setup.sh); it is not on PyPI.
+  "jsonschema>=4.20",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "pytest-timeout>=2"]
+
+[project.scripts]
+agentic-compiler = "agentic_compiler.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["agentic_compiler*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q -ra --strict-markers"
+markers = [
+  "device: needs a real GPU/NPU and its toolchain (nvcc / ccec); skipped elsewhere",
+  "drift: documents a known contract drift between the lintel and choreo pins (see docs/DRIFT.md)",
+]

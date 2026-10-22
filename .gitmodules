@@ -1,0 +1,6 @@
+[submodule "lintel"]
+	path = lintel
+	url = https://github.com/zackc6/lintel.git
+[submodule "choreo"]
+	path = choreo
+	url = https://github.com/zackc6/choreo.git

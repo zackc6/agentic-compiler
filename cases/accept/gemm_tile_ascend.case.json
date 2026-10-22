@@ -1,0 +1,24 @@
+{
+  "schema": "agentic-compiler.case.v0",
+  "name": "gemm_tile_ascend",
+  "region_id": "gemm.tile",
+  "op_family": "gemm",
+  "emit": "npu-bin",
+  "fallback": "classical",
+  "false_neg_owner": "zackc6",
+  "candidates": [
+    {
+      "enum_id": "gemm_tile",
+      "kernel": "choreo/examples/gemm.json",
+      "tensors": "choreo/examples/gemm.tensors.json",
+      "expected": "choreo/examples/gemm.expected.json",
+      "target": "ascend-a2"
+    }
+  ],
+  "expect": {
+    "decision": "freeze",
+    "walk": [
+      "accept"
+    ]
+  }
+}
