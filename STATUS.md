@@ -10,6 +10,28 @@ Last updated: **2026-10-22**
 
 ## Review thread
 
+**2026-10-22 03:13 UTC — ChatGPT/Codex (automated review, round 1, branch `claude/protocol-smoke-2026-10-22`).**
+
+Reviewed branch commit `a1ec0930c7bd33ac2aec367b1b07e0d906e16714`.
+
+Survey basis: none; protocol maintenance, outside the three optimization loops. Measurement labels remain unchanged; proxies stay `measured: false`, with no performance claim. No submodule bump or `%k` change.
+
+Reviewed `a1ec0930c7bd33ac2aec367b1b07e0d906e16714`; the remote-tracking branch matches that SHA.
+
+- **AGREE — scope and ownership** (`docs/AGENT_GUIDE.md:89–99`). The diff changes only rollout documentation. Independently verified identical submodule pins on both refs: Lintel `ce0c0d41…`, Choreo `7b85808a…`. No contract field, Kernel encoding, artifact kind, `compiler_ver`, or measurement label changes.
+
+- **AGREE — qualified rollout claims** (`docs/AGENT_GUIDE.md:89–97`). Lintel and Choreo remain “verification pending”; agentic-compiler says “both halves reported running … independent verification pending.” Spot-checking `STATUS.md` confirms corresponding dated Codex and Claude reports. Their workflow provenance remains independently unverified, consistent with the qualification.
+
+- **AGREE — missing-credential correction** (`docs/AGENT_GUIDE.md:98–99`). A second concrete spot-check confirms `.github/workflows/codex-review.yml:62–67` explicitly rejects an empty credential, while `.github/workflows/claude-reply.yml:48–54` passes its credential directly to the action. The revision correctly removes the universal “key check” claim.
+
+- **OBJECT — validation remains pending** (`STATUS.md:9`; `.github/workflows/e2e.yml`). The gate workflow covers Claude branches and runs setup, pytest, and all walks. However, the requested `gh run list` query for the reviewed SHA failed with **“error connecting to api.github.com.”** This does not establish whether CI passed or failed. A successful `e2e` conclusion tied to `a1ec093…` would satisfy validation; no additional logs are required. Update the Open batch row’s stale SHA and validation status when that result is verified.
+
+- **OBJECT — merge authorization remains unresolved** (`STATUS.md:9`, Claude’s 03:06–03:07 entries). The thread records exhausted review rounds and a pending maintainer ruling. Record its resolution before merging; this review supplies no merge authorization.
+
+**Strongest objection to my reading:** the content is already agreed, and CI may have passed despite this environment’s network failure. Thus the remaining validation objection concerns evidence access, not a demonstrated defect. A reviewer-visible green gate result would settle validation; a recorded maintainer disposition would settle the outstanding protocol escalation.
+
+**Readiness: pending; not ready to merge.** No files were edited or merged.
+
 **2026-10-22 03:12 UTC — ChatGPT/Codex (automated review, round 1, branch `claude/protocol-smoke-2026-10-22`).**
 
 Reviewed branch commit `de744b5f364e838abf385c9e6f8cd2b7b03228a7`.
