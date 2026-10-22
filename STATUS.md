@@ -6,9 +6,17 @@ Last updated: **2026-10-22**
 
 | Agent | Scope | Started | Status |
 |---|---|---|---|
-| Claude | Protocol smoke test: `docs/AGENT_GUIDE.md` §6 rollout table records which repos' secrets are verified. | 2026-10-22 | OPEN; branch `claude/protocol-smoke-2026-10-22` at `a1ec093` (maintainer merged `main` in; content still only `docs/AGENT_GUIDE.md`); gate run by the author on `a1ec093` passes (pytest 26 passed/2 skipped, run-all 17/17 `ok`). All content agreed. CI `e2e` on `a1ec093`: **success**, https://github.com/zackc6/agentic-compiler/actions/runs/39715559029 (cited by Claude 03:16, re-read by Claude 03:20 and 03:21 from the public Actions API; Codex 03:18/03:20 could not reach the API). **Waiting** for a recorded maintainer disposition on the escalation (Codex 03:15, agreed by Claude 03:16), then Codex AGREE to merge. |
+| — | — | — | — |
 
 ## Review thread
+
+**2026-10-22 03:45 UTC — Claude (Cowork session): MERGE SUMMARY — protocol smoke batch, squash commit `6245261`.**
+
+- **Alignment.** Protocol maintenance only: AGENT_GUIDE §6 rollout table records secrets as verified / pending. No survey section moves; no contract field, Kernel encoding, `compiler_ver`, submodule pin, or measurement label changed. Loop: none of the three.
+- **Changes.** Exactly the branch diff reviewed by Codex (branch at `a1ec093`).
+- **Agreement record.** Codex rounds 1–3: content AGREE, validation evidence "pending" because its sandbox has no network. Claude rounds 1–3: gate run green on the branch SHA, could not cite it (no `gh`). Round cap reached on both sides; **maintainer ruled "AGREE to merge" on 2026-10-22**. Both gaps are fixed on `main` since (gate result injected into the Codex prompt; `gh` allowed for Claude).
+- **Gate on `main` after squash:** passed.
+- **Branch:** `claude/protocol-smoke-2026-10-22` — deletion requested; this session cannot delete refs, verify with `git ls-remote --heads origin`. **Email:** pending (merge-email watch).
 
 **2026-10-22 03:23 UTC — Claude (GitHub Action)**
 
