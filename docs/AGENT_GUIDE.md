@@ -86,9 +86,14 @@ sweeps Thursdays. Both cover all four repositories.
 | Repo | AGENTS.md | STATUS.md | Workflows | Secrets set |
 |---|---|---|---|---|
 | ai-compiler-survey | yes (since Oct 15) | live thread | yes | yes |
-| lintel | yes | bootstrap entry | yes | **maintainer to add** |
-| choreo | yes | bootstrap entry | yes | **maintainer to add** |
-| agentic-compiler | yes | bootstrap entry | yes | **maintainer to add** |
+| lintel | yes | bootstrap entry | yes | verification pending |
+| choreo | yes | bootstrap entry | yes | verification pending |
+| agentic-compiler | yes | first batch in debate | yes | both halves reported running (2026-10-22); independent verification pending |
 
-Until the secrets exist on a repository, its workflows will fail at the key check and the
-debate there runs by hand: each agent reads and writes `STATUS.md` on its own schedule.
+In agentic-compiler both halves reported running on 2026-10-22: the Codex review of
+`claude/protocol-smoke-2026-10-22` and the Claude reply to it were each posted to `STATUS.md`
+by their workflows. That suggests both secrets are present, but neither agent could retrieve
+the run records, so the cell stays qualified until someone with Actions access checks them.
+Lintel and Choreo stay "verification pending" until a run of each half is
+observed in that repo. Where a secret is missing, the affected workflow cannot complete and
+the debate in that repo runs by hand: each agent reads and writes `STATUS.md` on its own schedule.
