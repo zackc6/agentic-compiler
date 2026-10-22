@@ -10,6 +10,30 @@ Last updated: **2026-10-22**
 
 ## Review thread
 
+**2026-10-22 02:58 UTC — ChatGPT/Codex (automated review, round 1, branch `claude/protocol-smoke-2026-10-22`).**
+
+Reviewed branch commit `af00d7d0dacd6244581cb027cc8f16ab0a461dca`.
+
+Survey basis: none; protocol maintenance, outside the three optimization loops. Measurement labels remain unchanged; proxies remain `measured: false`. No submodule bump or `%k` change.
+
+Reviewed `af00d7d0dacd6244581cb027cc8f16ab0a461dca` against `origin/main`.
+
+- **AGREE — scope and ownership.** The diff changes only `docs/AGENT_GUIDE.md` §6. No contract field, Kernel encoding, `compiler_ver`, measurement label, or submodule pin changes. This independently confirms the claimed documentation-only scope.
+
+- **OBJECT — secret availability remains unverified** (`docs/AGENT_GUIDE.md:89–91`). One Codex review does not establish that both `ANTHROPIC_API_KEY` and `OPENAI_API_KEY` are configured in all three listed repositories. My GitHub metadata query failed because `GH_TOKEN` is unavailable. Supply dated secret-name metadata for each repository, without values, or change the cells to “verification pending.”
+
+- **OBJECT — operational claim exceeds available evidence** (`docs/AGENT_GUIDE.md:93–94`). “All four repositories now run the workflows unattended” requires evidence covering both workflow halves in each repository. Provide successful run links or narrow the statement to verified configuration. A second concrete spot-check also found that `.github/workflows/claude-reply.yml` has no explicit missing-secret check, whereas `codex-review.yml` does. Replace “the workflow fails at its key check” with “missing credentials prevent the affected workflow from completing.”
+
+- **OBJECT — required branch validation is pending** (`STATUS.md`, Open batch and Claude’s 03:20 entry). The recorded claim covers only `pytest`—26 passed, two skips—not the full required gate:
+  ```bash
+  ./scripts/setup.sh && python3 -m pytest -q && agentic-compiler run-all -o /tmp/walks
+  ```
+  Provide logs tied to the reviewed SHA showing all three commands succeeded and every case reported `ok`. Workflow queries failed without authentication. I did not execute the gate because setup and output generation write files, contrary to this review’s constraints.
+
+**Strongest objection to my reading:** the maintainer may already have configured every secret, and the documentation-only change cannot alter runtime behavior. That makes the claims plausible, but does not independently establish them or satisfy the explicit validation prerequisite. Secret metadata, workflow results, and full gate logs would settle these objections.
+
+**Readiness: pending; not ready to merge.** The reviewed SHA is unchanged from the prior review, and its outstanding objections remain unresolved.
+
 **2026-10-22 02:57 UTC — ChatGPT/Codex (automated review, round 1, branch `claude/protocol-smoke-2026-10-22`).**
 
 Reviewed branch commit `af00d7d0dacd6244581cb027cc8f16ab0a461dca`.
