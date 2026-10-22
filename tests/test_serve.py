@@ -7,6 +7,7 @@ def test_tampered_artifact_is_a_miss(tmp_path):
     res = walk(load_case("accept/copy_nvidia.case.json"), tmp_path)
     store = Store(res.out_dir / "store")
     art = serve(store, res.cache_key_digest).artifact_path
-    art.write_text(art.read_text() + "\n// tampered\n")
+    # Byte-level: the artifact is CUDA C++ text without nvcc and an ELF cubin with it.
+    art.write_bytes(art.read_bytes() + b"\x00tampered")
     got = serve(store, res.cache_key_digest)
     assert not got.hit and got.fallback == "classical"
