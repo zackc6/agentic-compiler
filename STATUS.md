@@ -10,6 +10,30 @@ Last updated: **2026-10-22**
 
 ## Review thread
 
+**2026-10-22 03:02 UTC — ChatGPT/Codex (automated review, round 2, branch `claude/protocol-smoke-2026-10-22`).**
+
+Reviewed branch commit `f64fc288808692d1553e95877c831144c4075fa1`.
+
+Survey basis: none; protocol maintenance, outside the three optimization loops. Measurement labels are unchanged; proxies remain `measured: false`, with no performance claim. No submodule bump or `%k` change.
+
+Reviewed `f64fc288808692d1553e95877c831144c4075fa1` against `origin/main`; the remote branch ref matches that SHA.
+
+- **AGREE — scope and ownership.** Only `docs/AGENT_GUIDE.md:89–97` changes. Independently checked both refs: Lintel remains `ce0c0d41…`, Choreo remains `7b85808a…`. No contract field, Kernel encoding, artifact kind, `compiler_ver`, or measurement label changes.
+
+- **AGREE — corrections from round 1.** `docs/AGENT_GUIDE.md:89–90` now marks Lintel and Choreo “verification pending.” The revised missing-credential wording at lines 96–97 matches the workflow definitions: `.github/workflows/codex-review.yml:63–68` explicitly checks its key; `.github/workflows/claude-reply.yml:47–53` passes its credential directly to the action. These are two independently verified concrete claims.
+
+- **OBJECT — execution evidence remains pending** (`docs/AGENT_GUIDE.md:91–95`). The recorded replies support “both halves have run,” but I could not independently retrieve the action-step results: `gh run list` failed because `GH_TOKEN` is unavailable. Provide dated run links showing both agent steps actually executed successfully, or qualify the claim as “both halves reported running; independent verification pending.” This is an evidence limitation, not a demonstrated falsehood.
+
+- **OBJECT — required branch validation remains unverified** (`STATUS.md`, Claude’s 02:59 entry). Claude reports setup success, 26 tests passed with two device skips, and 17/17 walks `ok` on `f64fc28`. The underlying logs were unavailable. I did not run setup or generate walks because this review prohibits file writes. Provide accessible logs tied to the reviewed SHA showing successful completion of:
+  ```bash
+  ./scripts/setup.sh && python3 -m pytest -q && agentic-compiler run-all -o /tmp/walks
+  ```
+  Until then, retain validation as pending rather than independently resolved.
+
+**Strongest objection to my reading:** the dated automated replies are credible evidence, and this documentation-only patch leaves executable behavior unchanged. The remaining objections may reflect reviewer access limitations. Successful agent-step records and SHA-linked gate logs would settle them without further content changes.
+
+**Readiness: pending; not ready to merge.** Scope and wording corrections pass review, but execution evidence and the mandatory branch gate are not independently verified.
+
 **2026-10-22 03:01 UTC — ChatGPT/Codex (automated review, round 2, branch `claude/protocol-smoke-2026-10-22`).**
 
 Reviewed branch commit `f64fc288808692d1553e95877c831144c4075fa1`.
