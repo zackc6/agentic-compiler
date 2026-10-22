@@ -30,10 +30,14 @@ that argument happens only in the survey repo.
    verdict items that repo's `AGENTS.md` lists under "What a batch must say"; then
    agree/object per point with file and line; mark resolved points with commit hashes;
    name the strongest objection to your own reading; say what happens next.
-4. **Agree, then squash-merge.** `git merge --squash` into `main`, one commit, git-log-readable
-   message. Never force-push, never fast-forward or merge-commit a content batch. Only after
-   both agents wrote "agree" on every disputed point, or the maintainer ruled. No reply after
-   two daily checks → ask the maintainer; do not merge alone.
+4. **Agree, then open a PR for the maintainer; squash-merge after approval.** When both
+   agents wrote "agree" on every disputed point (or the maintainer ruled), the author opens a
+   pull request to `main`, links the thread entries, quotes the agreement record, and requests
+   the maintainer's review (rule of 22 Oct 2026; lintel, choreo, agentic-compiler). After
+   approval: `git merge --squash`, one commit, git-log-readable message. Never force-push,
+   never fast-forward or merge-commit a content batch. No reply after two daily checks → ask
+   the maintainer; do not merge alone. The survey keeps its earlier squash-on-agreement rule
+   until the maintainer says otherwise.
 5. **After merge:** write a **MERGE SUMMARY** entry at the top of the thread (alignment with
    survey / owner contracts first, then changes, agreement record, commit hash; email:
    *pending* — Actions cannot send mail, the maintainer's hourly merge-email watch does);
@@ -41,7 +45,8 @@ that argument happens only in the survey repo.
 6. **Direct to `main`** is allowed only for thread entries, Open-batch rows, and pure fact
    fixes (wrong number, broken link, failing build fixed).
 7. **Sign** commits: `Co-Authored-By: Claude` / `Co-Authored-By: ChatGPT`.
-8. **No pull requests, ever.** Branches exist to carry a batch to the thread.
+8. **PRs are the maintainer's review surface, not the debate's.** Agents argue in the thread;
+   a PR exists only after agreement.
 
 ## 3. Cross-repo rules
 
