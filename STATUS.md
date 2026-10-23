@@ -1,12 +1,14 @@
 # Status
 
-Last updated: **2026-10-22**
+Last updated: **2026-10-23**
 
-## Open batch
+## Open batches
 
-| Agent | Scope | Started | Status |
-|---|---|---|---|
-| — | — | — | — |
+At most three in flight (`AGENTS.md`). Representation limits found by a walk are filed as gaps in `lintel/gaps/` or `choreo/gaps/`.
+
+| Batch | Agent | Branch | Started | Status |
+|---|---|---|---|---|
+| protocol | Claude (Cowork session) | `claude/bench-protocol-2026-10-23` | 2026-10-23 | OPEN; bench side of the IR-increment loop, pytest removed, round cap 2; PR for the maintainer. |
 
 ## Review thread
 

@@ -1,8 +1,9 @@
-# Agent guide: the four repositories, one protocol
+# Agent guide: the four repositories, two working rules
 
 For any agent (ChatGPT/Codex, Claude, Cursor, or a new one) joining the maintainer's
-agentic-compiler work. Read this once; each repository's `AGENTS.md` repeats the protocol
-and adds what is specific to that repository.
+agentic-compiler work. Read this once; each repository's `AGENTS.md` is authoritative for that repository. Since
+23 October 2026 the two IR repositories (lintel, choreo) work by the **IR-increment loop** and
+the bench (agentic-compiler) by its **bench rules**; the survey keeps its own protocol.
 
 ## 1. The four repositories
 
@@ -10,43 +11,53 @@ and adds what is specific to that repository.
 |---|---|---|---|
 | [ai-compiler-survey](https://github.com/zackc6/ai-compiler-survey) | **Referee.** Living survey and design guide; the thesis and its dated forecasts. | Whether the thesis holds; evidence tiers; forecast calls. | `scripts/validate_survey.py`, PDF rebuilt |
 | [lintel](https://github.com/zackc6/lintel) | **Control plane.** Written contract (schemas, examples) + design docs. No code. | Schema field names; the three loops; kill switches; year-1 SKU. | `scripts/validate_contract.py` |
-| [choreo](https://github.com/zackc6/choreo) | **Data plane.** Kernel-schedule compiler: AST, W/L/S/V admit, interpreter, CUDA/CCE sinks. | Kernel encoding; admit findings; sinks; `compiler_ver`. | `pytest` |
-| [agentic-compiler](https://github.com/zackc6/agentic-compiler) | **Where they run together.** The walk, the case corpus, drift report, performance table. `lintel` and `choreo` are submodules. | The walk; cases; `docs/DRIFT.md`; `docs/PERFORMANCE.md`. | `pytest` + `agentic-compiler run-all` |
+| [choreo](https://github.com/zackc6/choreo) | **Data plane.** Kernel-schedule compiler: AST, W/L/S/V admit, interpreter, CUDA/CCE sinks. | Kernel encoding; admit findings; sinks; `compiler_ver`. | `scripts/check_carriers.py` (+ one cubin smoke on CI) |
+| [agentic-compiler](https://github.com/zackc6/agentic-compiler) | **Where they run together.** The walk, the case corpus, drift report, performance table. `lintel` and `choreo` are submodules. | The walk; cases; `docs/DRIFT.md`; `docs/PERFORMANCE.md`. | `agentic-compiler run-all` (every case `ok`) |
 
 Thesis: *the compiler increasingly becomes an agentic optimization system.* The survey tests
 it against the public record; the other three build it; agentic-compiler is where the
 survey's falsifiers can actually fire. Nothing built here is allowed to argue the thesis —
 that argument happens only in the survey repo.
 
-## 2. The protocol (identical in all four)
+## 2. The working rules
 
-1. **Claim** a row in the **Open batch** table at the top of `STATUS.md` before editing.
-   Overlapping scope with the other agent → review their work, do not edit the same files.
-2. **Branch.** Content goes on `claude/<topic>-<date>` or `chatgpt/<topic>-<date>`. Run that
-   repo's validation gate **on the branch**.
-3. **Argue** in the **Review thread** of `STATUS.md` on `main`: newest first, one dated entry
-   per reply, headed `**<YYYY-MM-DD HH:MM UTC> — <Agent>**` (ChatGPT headings must contain
-   `ChatGPT` after the date, or the Claude wake-up workflow will not fire). Lead with the
-   verdict items that repo's `AGENTS.md` lists under "What a batch must say"; then
-   agree/object per point with file and line; mark resolved points with commit hashes;
-   name the strongest objection to your own reading; say what happens next.
-4. **Agree, then open a PR for the maintainer; squash-merge after approval.** When both
-   agents wrote "agree" on every disputed point (or the maintainer ruled), the author opens a
-   pull request to `main`, links the thread entries, quotes the agreement record, and requests
-   the maintainer's review (rule of 22 Oct 2026; lintel, choreo, agentic-compiler). After
-   approval: `git merge --squash`, one commit, git-log-readable message. Never force-push,
-   never fast-forward or merge-commit a content batch. No reply after two daily checks → ask
-   the maintainer; do not merge alone. The survey keeps its earlier squash-on-agreement rule
-   until the maintainer says otherwise.
-5. **After merge:** write a **MERGE SUMMARY** entry at the top of the thread (alignment with
-   survey / owner contracts first, then changes, agreement record, commit hash; email:
-   *pending* — Actions cannot send mail, the maintainer's hourly merge-email watch does);
-   delete the branch and any draft it superseded; verify with `git ls-remote --heads origin`.
-6. **Direct to `main`** is allowed only for thread entries, Open-batch rows, and pure fact
-   fixes (wrong number, broken link, failing build fixed).
-7. **Sign** commits: `Co-Authored-By: Claude` / `Co-Authored-By: ChatGPT`.
-8. **PRs are the maintainer's review surface, not the debate's.** Agents argue in the thread;
-   a PR exists only after agreement.
+### 2a. Lintel and Choreo: the IR-increment loop
+
+Both are **IR-design repositories** — Lintel the control-plane IR (session, admit record,
+cache key, land/revert/reject; CFG + cost + ADG), Choreo the data-plane IR (typed kernel
+schedule, W/L/S/V admit, NV + Ascend sinks). They solve different problems and progress
+independently. Full text: each repo's `AGENTS.md`, "The IR-increment loop"; backlog format:
+`gaps/README.md`.
+
+1. **Unit of work = increment:** gap → IR change → carrier example → falsifier, on a gap from
+   `gaps/` (`L-nnn` / `C-nnn`). It opens only when all four are on the branch; the gate is a
+   precondition, not a thread topic. Debate the **falsifier** and the **change** only.
+2. **Parallel:** up to three gaps in flight per repo, one owner each (`mode: compete` gaps
+   allow competing increments). Schemas are versioned (`v1` beside `v0`); the AST is closed.
+3. **Thread:** `STATUS.md` Review thread, newest first, headed
+   `**<YYYY-MM-DD HH:MM UTC> — <Agent> [<gap id>]**`; **two rounds per side**, then the
+   maintainer. Never argue validation evidence.
+4. **The maintainer approves every merge** through a pull request; no auto-land, no tie-break.
+   After approval: squash, MERGE SUMMARY, gap status → `closed` / `falsified`, delete branch.
+5. **IR-design stage:** examples and tests are illustrative carriers; principle-test suites
+   and carrier generators wait until both IRs are decided.
+6. **Direct to `main`:** thread entries, Open-gaps rows, new gap files, fact fixes.
+
+### 2b. agentic-compiler: the bench
+
+No IR of its own. It runs the two IRs together and feeds the loop **one way**: a walk that
+hits a representation limit files a **gap** in the owner repo (`lintel/gaps/` or
+`choreo/gaps/`); the bench never designs. Its own batches are submodule bumps (on a cadence,
+not per upstream commit), case additions, and measurement rows (`perf/results/*.json`, written
+by the measurement job — an agent may not type a number). Same parallelism (three batches in
+flight), same two-round cap, same maintainer-approved PR for every merge. Full text:
+`agentic-compiler/AGENTS.md`.
+
+### 2c. Survey
+
+Unchanged: evidence batches on agent branches, debate to agreement in the thread, the
+survey's own merge rule. The survey is the referee: measured numbers and fired falsifiers
+from the other three arrive as source rows in its `STATUS.md`.
 
 ## 3. Cross-repo rules
 
@@ -54,7 +65,7 @@ that argument happens only in the survey repo.
   falsifier fired, a measured number) is reported as a row in the *survey's* `STATUS.md`.
 - **Contract changes start in the owner repo.** Field names → lintel. Kernel encoding,
   artifact kinds, `compiler_ver` → choreo. They reach agentic-compiler as a *submodule-bump
-  batch* that updates `docs/DRIFT.md` and `tests/test_drift.py` in the same commit. Nobody
+  batch* that updates `docs/DRIFT.md` in the same commit. Nobody
   edits submodule files from agentic-compiler.
 - **Three loops stay apart** (survey §2.4, lintel `ARCHITECTURE.md`). Application search never
   edits the compiler. IR evolution = commit on choreo `main` + `compiler_ver` bump. Controller
@@ -64,10 +75,13 @@ that argument happens only in the survey repo.
 
 ## 4. Daily routine for an agent
 
-1. Read the four `STATUS.md` files (Open batch + the top of the Review thread).
+1. Read the four `STATUS.md` files (Open gaps / Open batches + the top of the Review thread).
 2. Reply to anything addressed to you; verify at least two concrete claims before agreeing.
-3. If a branch has both agreements and a passing gate, merge it per §2.4–2.5.
-4. Only then start a new batch, and claim it first.
+3. If an increment or batch has both agreements (or hit the round cap) and a passing gate,
+   open the PR for the maintainer. Never merge yourself.
+4. Only then start a new increment or batch: claim its row first; in an IR repo pick a gap
+   from `gaps/`.
+5. Weekly: report gaps closed and gaps falsified per IR repo.
 
 Scheduled: Claude checks threads daily (08:52 HKT) and sweeps evidence Mondays; ChatGPT
 sweeps Thursdays. Both cover all four repositories.
@@ -80,20 +94,20 @@ sweeps Thursdays. Both cover all four repositories.
 - `.github/workflows/codex-review.yml` — a `claude/*` branch create/push (or
   `claude_replied` dispatch) runs a read-only Codex review, posts it to `STATUS.md`, and
   dispatches Claude. Secret: `OPENAI_API_KEY`.
-- At most three rounds per side per branch. A green workflow is a precondition for merging,
-  never agreement.
+- At most two rounds per side per increment or batch (lowered from three on 2026-10-23). A
+  green workflow is a precondition for merging, never agreement.
 - The survey repo additionally has `survey-event-alerts.yml` (maintainer notifications) and
   `rebuild-pending-sweep.yml` (PDF rebuild); the other three have build CI where it exists
   (`choreo/test.yml`, `agentic-compiler/e2e.yml`).
 
-## 6. Status of the rollout (2026-10-22)
+## 6. Status of the rollout (2026-10-23)
 
 | Repo | AGENTS.md | STATUS.md | Workflows | Secrets set |
 |---|---|---|---|---|
 | ai-compiler-survey | yes (since Oct 15) | live thread | yes | yes |
-| lintel | yes | bootstrap entry | yes | verification pending |
-| choreo | yes | bootstrap entry | yes | verification pending |
-| agentic-compiler | yes | first batch in debate | yes | both halves reported running (2026-10-22); independent verification pending |
+| lintel | IR-increment loop (PR #2, merged 2026-10-23); `gaps/L-001…L-014` | Open gaps table | yes, cap 2 | verification pending |
+| choreo | IR-increment loop (PR #3, merged); pytest removed (PR #4); `gaps/C-001…C-014` | Open gaps table | yes, cap 2 | verification pending |
+| agentic-compiler | bench rules; pytest removed | Open batches table | yes, cap 2 | both halves reported running (2026-10-22); independent verification pending |
 
 In agentic-compiler both halves reported running on 2026-10-22: the Codex review of
 `claude/protocol-smoke-2026-10-22` and the Claude reply to it were each posted to `STATUS.md`

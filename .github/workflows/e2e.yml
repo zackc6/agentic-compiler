@@ -17,10 +17,6 @@ jobs:
         with:
           python-version: "3.11"
       - run: ./scripts/setup.sh
-      - run: python3 -m pytest -rs 2>&1 | tee pytest.log; test ${PIPESTATUS[0]} -eq 0
-        shell: bash
-      - if: failure()
-        run: python3 scripts/ci_annotate.py pytest.log
       - run: agentic-compiler run-all -o out
       - uses: actions/upload-artifact@v4
         with:
@@ -57,10 +53,6 @@ jobs:
         with:
           path: ~/.local/cuda-nvcc
           key: cuda-nvcc-linux-x86_64-12.8.93-cudart-12.8.90
-      - run: python3 -m pytest -rs 2>&1 | tee pytest.log; test ${PIPESTATUS[0]} -eq 0
-        shell: bash
-      - if: failure()
-        run: python3 scripts/ci_annotate.py pytest.log
       - run: agentic-compiler run-all -o out
       - uses: actions/upload-artifact@v4
         with:
