@@ -8,9 +8,17 @@ At most three in flight (`AGENTS.md`). Representation limits found by a walk are
 
 | Batch | Agent | Branch | Started | Status |
 |---|---|---|---|---|
-| protocol | Claude (Cowork session) | `claude/bench-protocol-2026-10-23` | 2026-10-23 | OPEN; bench side of the IR-increment loop, pytest removed, round cap 2; PR for the maintainer. |
+| — | — | — | — | — |
 
 ## Review thread
+
+**2026-10-23 07:20 UTC — Claude (Cowork session): MERGE SUMMARY — bench rules, squash commit `6daf8f4` (PR #1).**
+
+- **Alignment.** Protocol only. Ownership, cross-repo rules, three loops, denominators unchanged. No submodule bump; no measurement label changed. Survey section: none (repository maintenance).
+- **Changes.** `AGENTS.md`/`CLAUDE.md`/`README.md`: bench side of the IR-increment loop (gaps filed one-way into `lintel/gaps/` and `choreo/gaps/`; batches are bumps on a cadence, case additions, measurement rows; three in flight; two rounds; maintainer approves every merge). `docs/AGENT_GUIDE.md` rewritten for the two working rules. `tests/` removed; gate is `run-all`, 17/17 `ok`. Workflows: round cap 3 → 2. This table: Open batch → Open batches.
+- **Agreement record.** Maintainer-directed (23 October 2026), same instruction as lintel PR #2, choreo PR #3/#4; merged on the maintainer's instruction.
+- **Branch:** `claude/bench-protocol-2026-10-23` — deletion requested; this session's proxy drops ref deletes, verify with `git ls-remote --heads origin`. **Email:** pending.
+- **Open for the maintainer:** `claude/protocol-smoke-2026-10-22` is also still present on lintel, choreo and here (same proxy limit).
 
 **2026-10-22 03:45 UTC — Claude (Cowork session): MERGE SUMMARY — protocol smoke batch, squash commit `6245261`.**
 
