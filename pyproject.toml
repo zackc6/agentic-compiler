@@ -14,8 +14,6 @@ dependencies = [
   "jsonschema>=4.20",
 ]
 
-[project.optional-dependencies]
-dev = ["pytest>=8", "pytest-timeout>=2"]
 
 [project.scripts]
 agentic-compiler = "agentic_compiler.cli:main"
@@ -23,8 +21,7 @@ agentic-compiler = "agentic_compiler.cli:main"
 [tool.setuptools.packages.find]
 include = ["agentic_compiler*"]
 
-[tool.pytest.ini_options]
-testpaths = ["tests"]
+["tests"]
 addopts = "-q -ra --strict-markers"
 markers = [
   "device: needs a real GPU/NPU and its toolchain (nvcc / ccec); skipped elsewhere",

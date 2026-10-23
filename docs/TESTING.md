@@ -1,11 +1,12 @@
 # Testing
 
 ```bash
-python3 -m pytest              # everything that can run here
-python3 -m pytest -m device    # only the toolchain-gated tests (skip without nvcc / ccec)
-python3 -m pytest -m drift     # only the known-drift sentinels
-agentic-compiler run-all -o out   # the same walks, with outputs kept on disk
+./scripts/setup.sh && agentic-compiler run-all -o out   # every case under cases/, outputs on disk
 ```
+
+The pytest suite was removed on 2026-10-23: while the two IRs are being designed, cases are
+illustrative walks, not a correctness contract. The gate is every case `ok`. Drift between the
+pins is recorded in `docs/DRIFT.md`.
 
 ## Case files
 
@@ -72,5 +73,5 @@ Choreo's own CI does) so the NVIDIA half runs on GitHub; `ccec` is not a public 
 
 ## Adding a case
 
-Drop a `*.case.json` under `cases/<group>/`; it is picked up by both pytest and `run-all`.
+Drop a `*.case.json` under `cases/<group>/`; it is picked up by `run-all`.
 If it needs a kernel that is not in `choreo/examples/`, that kernel belongs in Choreo first.

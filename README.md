@@ -43,7 +43,6 @@ cases/*.case.json│  region · op_family · candidates · emit · budget · fal
 git clone --recurse-submodules https://github.com/zackc6/agentic-compiler
 cd agentic-compiler
 ./scripts/setup.sh            # submodules → choreoir (from ./choreo) → this package
-python3 -m pytest             # 26 pass, 2 device tests skip without nvcc/ccec
 agentic-compiler run-all -o out
 agentic-compiler serve out/copy_nvidia $(jq -r .cache_key_digest out/copy_nvidia/summary.json)
 ```
@@ -93,8 +92,9 @@ ok  search_budget_exhausted      fallback reject:L → reject:S
 
 Submodule commits are the pins. `agentic-compiler pins` prints them with the `choreoir`
 version and whether `nvcc` / `ccec` were found. Bumping a submodule is a commit here, and
-the drift tests (`tests/test_drift.py`) must be re-read when it happens.
+`docs/DRIFT.md` must be re-read when it happens.
 
-Git: no PRs. Content batches go on `claude/*` / `chatgpt/*` branches, are argued in
-[`STATUS.md`](STATUS.md), and are squash-merged to `main` on two-agent agreement — the same
-debate-then-merge protocol as the survey and the submodules. See [`AGENTS.md`](AGENTS.md).
+Git: a batch (submodule bump, case addition, measurement row) goes on a `claude/*` / `chatgpt/*`
+branch, is argued in [`STATUS.md`](STATUS.md) (two rounds per side), and lands through a pull
+request the maintainer approves. Representation limits found by a walk are filed as gaps in
+`lintel/gaps/` or `choreo/gaps/`, never designed here. See [`AGENTS.md`](AGENTS.md).

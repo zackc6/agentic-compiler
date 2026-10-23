@@ -3,7 +3,7 @@
 Lintel (`ce0c0d4`) and Choreo (`7b85808`) disagree in places. This repo does not paper over
 that: the walk follows Choreo's live contract (`choreo/docs/LINTEL_CONSUME.md`) for Kernel
 encoding and artifact kinds, validates against Lintel's schemas for field names, and records
-where the two part ways. `tests/test_drift.py` fails the day a bump fixes an item so this
+where the two part ways. the walks' output changes the day a bump fixes an item, so this
 page gets updated in the same commit.
 
 `agentic-compiler check-contract` runs Choreo's own `consume-check` against the Lintel pin
@@ -15,7 +15,7 @@ and prints the full list (39 items at these pins).
 * Choreo contract: the freeze artifact is an `nvcc` cubin or a `ccec` NPU-bin (`kind=cubin`,
   `artifact.launch` on the pin); without a toolchain the sink *source* is what exists.
 * Here: records write the true kind. Reject records (`kind: none`) validate fully; freeze
-  records fail on exactly this one field and `tests/test_e2e.py` asserts it is the only error.
+  records fail on exactly this one field; the walk reports it as the only error (pytest sentinel removed 2026-10-23).
 * Fix belongs in Lintel: extend the enum (`source`, `cubin`, `npu-bin`), then bump the pin and
   drop the `KNOWN_DRIFT` allowance in the test.
 
