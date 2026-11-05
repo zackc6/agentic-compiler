@@ -33,7 +33,7 @@ and prints the full list (39 items at these pins).
 
 Choreo's `LINTEL_CONSUME.md` lists the absorb commits that fix all of this on a local Lintel
 `main` that could not be pushed (`cursor[bot]` 403). Once those land on
-`github.com/zackc6/lintel`, bump the submodule here; `test_lintel_pin_fails_choreo_consume_check`
+`github.com/zackc6/compiler-harness`, bump the submodule here; `test_lintel_pin_fails_choreo_consume_check`
 will fail and should be deleted along with this section.
 
 **This repo's own session logs and records are not affected**: they are generated from the

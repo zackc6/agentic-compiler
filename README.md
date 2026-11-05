@@ -2,12 +2,12 @@
 
 End-to-end implementation of the agentic compiler described in
 [ai-compiler-survey](https://github.com/zackc6/ai-compiler-survey): the
-[Lintel](https://github.com/zackc6/lintel) compiler harness (control plane) walking the
+[compiler-harness](https://github.com/zackc6/compiler-harness) (formerly Lintel), the self-evolving compiler harness (control plane), walking the
 [compiler-foundation](https://github.com/zackc6/compiler-foundation) (formerly Choreo) data plane, with the survey as referee.
 
-> **Naming (2026-11-05).** The data-plane repository was renamed from `choreo` to `compiler-foundation` by the maintainer. Lintel is the self-evolving compiler harness (control plane); compiler-foundation is the extensible core foundation (data plane). The v0.1 code keeps its identifiers (`choreoir`, `choreo.v*` schema tags) until the v0.1 AST is replaced; "Choreo" in older records means this repository. The submodule path stays `choreo/` until then.
+> **Naming (2026-11-05).** The maintainer renamed the repositories: `lintel` is now **`compiler-harness`**, the self-evolving compiler harness (control plane), and `choreo` is now **`compiler-foundation`**, the extensible core foundation (data plane). Code identifiers (`choreoir`, `choreo.v*` and `lintel-ir.*` schema names, the `lintel/` and `choreo/` submodule paths) stay until the v0.1 designs are replaced; "Lintel" and "Choreo" in older records mean these repositories. The submodule paths stay until then.
 
-Both repos are **submodules**, pinned by commit. Lintel is the written contract (schemas, no
+Both repos are **submodules**, pinned by commit. compiler-harness is the written contract (schemas, no
 code); compiler-foundation (formerly Choreo) is the data-plane foundation, today a kernel-schedule compiler. This repo is the only place where the two meet
 and run: it contains the walk, the test cases, how to set it up, how to test it, and — once a
 device is wired in — the performance numbers.

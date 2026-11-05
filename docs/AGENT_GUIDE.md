@@ -10,7 +10,7 @@ the bench (agentic-compiler) by its **bench rules**; the survey keeps its own pr
 | Repo | Role | Owns | Validation gate |
 |---|---|---|---|
 | [ai-compiler-survey](https://github.com/zackc6/ai-compiler-survey) | **Referee.** Living survey and design guide; the thesis and its dated forecasts. | Whether the thesis holds; evidence tiers; forecast calls. | `scripts/validate_survey.py`, PDF rebuilt |
-| [lintel](https://github.com/zackc6/lintel) | **Control plane.** Written contract (schemas, examples) + design docs. No code. | Schema field names; the three loops; kill switches; year-1 SKU. | `scripts/validate_contract.py` |
+| [compiler-harness](https://github.com/zackc6/compiler-harness) | **Control plane.** Written contract (schemas, examples) + design docs. No code. | Schema field names; the three loops; kill switches; year-1 SKU. | `scripts/validate_contract.py` |
 | [compiler-foundation](https://github.com/zackc6/compiler-foundation) | **Data plane.** Kernel-schedule compiler: AST, W/L/S/V admit, interpreter, CUDA/CCE sinks. | Kernel encoding; admit findings; sinks; `compiler_ver`. | `scripts/check_carriers.py` (+ one cubin smoke on CI) |
 | [agentic-compiler](https://github.com/zackc6/agentic-compiler) | **Where they run together.** The walk, the case corpus, drift report, performance table. `lintel` and `choreo` are submodules. | The walk; cases; `docs/DRIFT.md`; `docs/PERFORMANCE.md`. | `agentic-compiler run-all` (every case `ok`) |
 
