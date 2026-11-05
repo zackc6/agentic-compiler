@@ -1,6 +1,6 @@
 [submodule "lintel"]
 	path = lintel
-	url = https://github.com/zackc6/lintel.git
+	url = https://github.com/zackc6/compiler-harness.git
 [submodule "choreo"]
 	path = choreo
-	url = https://github.com/zackc6/choreo.git
+	url = https://github.com/zackc6/compiler-foundation.git
